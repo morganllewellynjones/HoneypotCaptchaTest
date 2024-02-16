@@ -1,0 +1,14 @@
+{
+  "name": "bot_trap",
+  "version": "1.0.0",
+  "description": "simple dummy server to be attacked by bots",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js"
+  },
+  "author": "morgan, connie, ash",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
