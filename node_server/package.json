@@ -8,6 +8,7 @@
   },
   "author": "morgan, connie, ash",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "express": "^4.18.2"
   }

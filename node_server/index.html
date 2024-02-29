@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Bot Trap</title>
   </head>
   <body>
-	  <div>Hi Connie! Hi Ash! Ready to catch some bots?</div>
+    <form id="login_form">
+      <div>
+        <label for="username">Username: </label>
+        <input type="text" name="username" id="name" required />
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password" required />
+        <input type="submit" value="Login" />
+      </div>
+    </form>
   </body>
+  <script>
+    const form = document.querySelector("#login_form");
+    async function submitData() {
+      const formData = new FormData(form);
+      const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
+      try {
+        const response = await fetch("http://localhost:8080/login", {
+          method: "POST",
+          mode: "same-origin",
+          credentials: "same-origin",
+          cache: "no-cache",
+          body: jsonData,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        console.log(await response.json());
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      submitData();
+    });
+  </script>
 </html>
