@@ -8,7 +8,7 @@
     <title>Bot Trap</title>
   </head>
   <body>
-    <form id="login_form_r">
+    <form id="login_form">
       <div>
         <label for="name">Username: </label>
         <input type="text" name="username" id="name" required />
@@ -21,7 +21,7 @@
     </form>
   </body>
   <script>
-    const form = document.querySelector("#login_form_r");
+    const form = document.querySelector("#login_form");
     async function submitData() {
       const formData = new FormData(form);
       const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
