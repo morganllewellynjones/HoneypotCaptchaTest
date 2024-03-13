@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "fs";
+import {readFileSync, writeFileSync} from "fs";
 
 export function createAccount(username, password) {
   const data = JSON.parse(readFileSync("./data/account_data.json"));
@@ -21,10 +21,19 @@ export function resetAccountData() {
 }
 
 export function authenticateLogin(data) {
+  // Screen bots
+  if (data.usercode) {
+    // Blacklist stuff here
+    return false;
+  }
   const accounts = JSON.parse(readFileSync("./data/account_data.json"));
   const password = accounts[data.username];
-  const valid = password ? password === data.password : false;
-  return valid;
+  return password ? password === data.password : false;
+}
+
+export function blacklistIP(target) {
+  // Open file for appending if it exists, if not, create it and append.
+  writeFileSync('./data/blacklist.txt', target, {encoding: "utf-8", flag: 'a'});
 }
 
 export function logAccessAttempt(data) {
