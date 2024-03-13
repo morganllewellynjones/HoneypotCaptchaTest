@@ -26,3 +26,9 @@ export function authenticateLogin(data) {
   const valid = password ? password === data.password : false;
   return valid;
 }
+
+export function logAccessAttempt(data) {
+  writeFileSync(`./`);
+}
+
+export function logAccountCreation(data) {}
