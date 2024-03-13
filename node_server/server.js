@@ -20,6 +20,9 @@ server.get("/home", (req, res) => {
 
 server.use(express.json());
 
+// Load static files (CSS/Images/etc) for service
+server.use(express.static(path.join(__dirname, 'public')));
+
 server.post("/login", (req, res) => {
   res.json(authenticateLogin(req.body));
 });
