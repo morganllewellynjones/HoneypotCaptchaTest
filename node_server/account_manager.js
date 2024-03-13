@@ -24,6 +24,7 @@ export function authenticateLogin(data) {
   // Screen bots
   if (data.usercode) {
     // Blacklist stuff here
+    blacklistIP("someIP\n");
     return false;
   }
   const accounts = JSON.parse(readFileSync("./data/account_data.json"));
