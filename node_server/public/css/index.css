@@ -1,5 +1,14 @@
-/* Uncomment when we want to start testing the bot.
-form #usercode {
-    display: none;
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
- */
+
+.importantInfo {
+    display: none;
+    border: 2px solid red;
+    padding: 20px;
+}

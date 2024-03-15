@@ -20,13 +20,30 @@ export function resetAccountData() {
   return data;
 }
 
-export function authenticateLogin(data) {
+// Log ip of user to refuse future connections.
+async function requestListener() {
+  return fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        console.log("Incoming Login Attempt : " + data.ip);
+        return data.ip
+      });
+}
+
+export async function authenticateLogin(data) {
+
+  //let source = await requestListener();
+  let source = await requestListener();
   // Screen bots
-  if (data.usercode) {
+  if (data.acceptTerms) {
     // Blacklist stuff here
-    blacklistIP("someIP\n");
+    blacklistIP(source + "\n");
+    console.log("Denied Connection : " + source);
     return false;
   }
+
+  console.log(data);
+
   const accounts = JSON.parse(readFileSync("./data/account_data.json"));
   const password = accounts[data.username];
   return password ? password === data.password : false;
