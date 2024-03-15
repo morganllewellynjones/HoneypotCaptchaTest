@@ -19,57 +19,57 @@ async function getLogin(page) {
 }
 
 async function getUsername(page) {
-  const maybeUsername = page.
-  for await (const )
+  const inputs = await page.$$("input");
+  for await (const input of inputs) {
+    const value = await page.evaluate((input) => input.name, input);
+    const inputType = await page.evaluate((input) => input.type, input);
+    const display = await page.evaluate((input) => input.display, input);
+    console.log(value, inputType, display);
+    if (typeof (value == String)) {
+      const cleaned = value.trim().toLowerCase();
+      const isUsername = cleaned.includes("user") || cleaned.includes("name");
+      if (isUsername) {
+        return input;
+      }
+    }
+  }
+}
+
+async function getPassword(page) {
+  const inputs = await page.$$("input");
+  for await (const input of inputs) {
+    const value = await page.evaluate((input) => input.name, input);
+    const inputType = await page.evaluate((input) => input.type, input);
+    if (typeof (value == String)) {
+      const cleaned = value.trim().toLowerCase();
+      const isPassword = inputType === "password" || cleaned.includes("pass");
+      if (isPassword) {
+        return input;
+      }
+    }
+  }
 }
 
 (async () => {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({headless: false});
   const page = await browser.newPage();
-
+  await page.setViewport({ width: 1080, height: 1024, deviceScaleFactor: 1 });
   await page.goto("http://localhost:8080");
   await page.once("load", () => console.log("Page loaded!"));
   //console.log(inputs);
   console.log("Printing login");
   const login = await getLogin(page);
+  const userName = await getUsername(page);
+  const password = await getPassword(page);
+  console.log(userName);
   console.log(login);
-  //const login = await page.$("button ::-p-text(Log)");
-  //await page.keyboard.press("Escape");
+  console.log(password);
 
-  //console.log(login);
-  //await login.click();
-
-  //const login = await page.locator("button").filter(button => button.innerText.includes("Log"));
-  //const loginText = await page.evaluate(button => button.innerText, login);
-  //console.log(loginText);
-  //const buttons = await page.$$("button");
-  //const login = await searchByText(buttons, page, "Log");
-  //await login.click();
-  //console.log(typeof(buttons));
-  //console.log(await page.evaluate(button => button.innerText, login));
-  //for await (const button of buttons) {
-  //  console.log(await page.evaluate(button => button.innerText, button));
-  //}
-  //const buttons = await page.evaluate(() => document.querySelectorAll("button"));
-  //const button = await page.$eval("button", button => page.evaluatei);
-  //console.log(typeof(button));
-  //buttons.forEach(button => console.log(button));
-  //console.log(buttons);
-  //buttons.forEach(button => console.log(button.textContent));
-  //await browser.close();
+  await userName.type("jay");
+  await password.type("bird");
+  await login.click();
 })();
-
-// function example() {
-//   (async () => {
-//     // Launch the browser and open a new blank page
-//     const browser = await puppeteer.launch();
-//     const page = await browser.newPage();
-
-//     // Navigate the page to a URL
-//     await page.goto("https://chrome.com/");
-
 //     // Set screen size
-//     await page.setViewport({ width: 1080, height: 1024 });
 
 //     // Type into search box
 //     await page.type(".devsite-search-field", "automate beyond recorder");
