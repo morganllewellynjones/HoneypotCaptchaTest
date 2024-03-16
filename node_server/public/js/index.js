@@ -1,5 +1,8 @@
 (function (window) {
+    // Get login form
     const form = document.querySelector("#login_form");
+
+    // Submit login form and send that data to the server
     async function submitData() {
         const formData = new FormData(form);
         const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
@@ -21,6 +24,7 @@
         }
     }
 
+    // Add an event listener
     form.addEventListener("submit", (event) => {
         event.preventDefault();
         submitData().then((r) => {

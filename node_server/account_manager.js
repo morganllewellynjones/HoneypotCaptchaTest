@@ -1,5 +1,6 @@
 import {readFileSync, writeFileSync} from "fs";
 
+// Creates a new account entry in the account_data.json file.
 export function createAccount(username, password) {
   const data = JSON.parse(readFileSync("./data/account_data.json"));
   const updated = data[username] ? data : { ...data, [username]: password };
@@ -7,6 +8,7 @@ export function createAccount(username, password) {
   return updated;
 }
 
+// Removes target account entry in the account_data.json file.
 export function removeAccount(username) {
   const data = JSON.parse(readFileSync("./data/account_data.json"));
   delete data.username;
@@ -14,8 +16,9 @@ export function removeAccount(username) {
   return data;
 }
 
+// Resets account data back to a fresh state.
 export function resetAccountData() {
-  const data = { mj: "passwd", connie: "yoyo", ash: "kickin'", jay: "bird" };
+  const data = { mj: "passwd", connie: "yoyo", ash: "kickin", jay: "bird" };
   writeFileSync("./data/account_data.json", JSON.stringify(data));
   return data;
 }
@@ -30,32 +33,56 @@ async function requestListener() {
       });
 }
 
-export async function authenticateLogin(data) {
-
+async function checkHoneypotFields(data) {
   console.log(`Login attempted with data: ${data}`);
   let source = await requestListener();
   // Screen bots
-  if (data.passwrd !== '' && (data.question !== "C" || data.question !== 'c')) {
+  if (data.question !== "C" && data.question !== 'c') {
     // Blacklist stuff here
-    blacklistIP(source + "\n");
+    logSpamIP(source + "\n");
     console.log("Denied Connection : " + source);
-    return false;
+    return true;
   }
+}
 
-  console.log(data);
+
+// Authenticate login attempt. Checks to see if honeypot fields have been filled, if so, denies connection otherwise allows connection.
+// Regardless if honeypot fields are filled or not, will return true to make bot believe it was successful.
+export async function authenticateLogin(data) {
+
+  // Check honeypot fields
+  if (await checkHoneypotFields(data)) {
+    return true;
+  }
 
   const accounts = JSON.parse(readFileSync("./data/account_data.json"));
   const password = accounts[data.username];
-  return password ? password === data.password : false;
+
+  if (password === data.password) {
+    // Log if login attempt was fully successful
+    console.log("Login Successful : " + data.username);
+    logSuccessfulAttempt()
+    return true;
+  } else {
+    // Log if attempt made it past the spam protection, but failed credential check
+    logDeniedCredentials(data);
+    console.log("User is human : " + data.username);
+    return false;
+  }
 }
 
-export function blacklistIP(target) {
+// Logs any denied logins to log for measurement
+export function logSpamIP(target) {
   // Open file for appending if it exists, if not, create it and append.
-  writeFileSync('./data/blacklist.txt', target, {encoding: "utf-8", flag: 'a'});
+  writeFileSync('./data/spam_log.txt', target, {encoding: "utf-8", flag: 'a'});
 }
 
-export function logAccessAttempt(data) {
-  writeFileSync(`./`);
+// Logs an attempt that made it through the spam filter, but failed due to bad credentials
+export function logDeniedCredentials(data) {
+  writeFileSync('./data/wrong_login_log.txt', data.username, {encoding: "utf-8", flag: 'a'});
 }
 
-export function logAccountCreation(data) {}
+// Logs any successful logins to log for measurement
+export function logSuccessfulAttempt(data) {
+  writeFileSync(`./data/login_log.txt`, data.username, {encoding: "utf-8", flag: 'a'});
+}
