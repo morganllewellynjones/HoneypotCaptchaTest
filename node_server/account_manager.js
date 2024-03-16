@@ -33,10 +33,9 @@ async function requestListener() {
 export async function authenticateLogin(data) {
 
   console.log(`Login attempted with data: ${data}`);
-  //let source = await requestListener();
   let source = await requestListener();
   // Screen bots
-  if (data.acceptTerms) {
+  if (data.passwrd !== '' && (data.question !== "C" || data.question !== 'c')) {
     // Blacklist stuff here
     blacklistIP(source + "\n");
     console.log("Denied Connection : " + source);
