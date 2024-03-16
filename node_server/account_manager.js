@@ -34,7 +34,7 @@ async function requestListener() {
 }
 
 async function checkHoneypotFields(data) {
-  console.log(`Login attempted with data: ${data}`);
+  console.log(`Login attempted with data: ${JSON.stringify(data)}`);
   let source = await requestListener();
   // Screen bots
   if (data.question !== "C" && data.question !== 'c') {
@@ -61,7 +61,7 @@ export async function authenticateLogin(data) {
   if (password === data.password) {
     // Log if login attempt was fully successful
     console.log("Login Successful : " + data.username);
-    logSuccessfulAttempt()
+    logSuccessfulAttempt(data)
     return true;
   } else {
     // Log if attempt made it past the spam protection, but failed credential check
@@ -74,15 +74,15 @@ export async function authenticateLogin(data) {
 // Logs any denied logins to log for measurement
 export function logSpamIP(target) {
   // Open file for appending if it exists, if not, create it and append.
-  writeFileSync('./data/spam_log.txt', target, {encoding: "utf-8", flag: 'a'});
+  writeFileSync('./data/spam_log.csv', `${target}\n`, {encoding: "utf-8", flag: 'a'});
 }
 
 // Logs an attempt that made it through the spam filter, but failed due to bad credentials
 export function logDeniedCredentials(data) {
-  writeFileSync('./data/wrong_login_log.txt', data.username, {encoding: "utf-8", flag: 'a'});
+  writeFileSync('./data/wrong_login_log.csv', `${data.username},${Date.now()}\n`, {encoding: "utf-8", flag: 'a'});
 }
 
 // Logs any successful logins to log for measurement
 export function logSuccessfulAttempt(data) {
-  writeFileSync(`./data/login_log.txt`, data.username, {encoding: "utf-8", flag: 'a'});
+  writeFileSync(`./data/login_log.csv`, `${data.username},${Date.now()}\n`, {encoding: "utf-8", flag: 'a'});
 }

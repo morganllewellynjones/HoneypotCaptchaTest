@@ -1,0 +1,60 @@
+User
+Write a program that solves a riddle like: "what comes first in the alphabet c or s" or "what rhymes with deer:
+
+a. clear
+b. cloud
+c. wire
+d. green"
+ChatGPT
+
+To solve a riddle without knowing the correct answer beforehand, the program needs to evaluate each option systematically and determine the best match based on certain criteria. For the riddles provided, we can create a program that checks each option against the given criteria ("what comes first in the alphabet" or "what rhymes with deer"). Here's a JavaScript program to solve these types of riddles:
+
+javascript
+
+// Function to determine which option comes first in the alphabet
+function compareAlphabetically(option1, option2) {
+    return option1.localeCompare(option2);
+}
+
+// Function to determine if a word rhymes with a given word
+function checkRhyme(word, option) {
+    // Define some simple rhyming patterns
+    const rhymingPatterns = [/ear$/, /eer$/, /eir$/, /ere$/, /e[a-z]*r$/, /i[a-z]*r$/, /o[a-z]*r$/, /u[a-z]*r$/];
+
+    // Check if the option rhymes with the given word using the defined patterns
+    for (let pattern of rhymingPatterns) {
+        if (pattern.test(option)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to solve the riddle
+function solveRiddle(question, options) {
+    if (question.startsWith("What comes first in the alphabet")) {
+        // If the question is about alphabet order, compare options alphabetically
+        options.sort(compareAlphabetically);
+        return options[0];
+    } else if (question.startsWith("What rhymes with")) {
+        // If the question is about rhyming, check each option
+        const word = question.split(" ")[3].toLowerCase(); // Extract the word to rhyme with
+        for (let option of options) {
+            if (checkRhyme(word, option.toLowerCase())) {
+                return option;
+            }
+        }
+    }
+    return "Unable to determine"; // If unable to determine the answer
+}
+
+// Example riddle
+const question = "What rhymes with deer?";
+const options = ["clear", "cloud", "wire", "green"];
+
+const answer = solveRiddle(question, options);
+console.log("The answer is:", answer);
+
+This program defines functions to compare words alphabetically and to check if a word rhymes with a given word. Then, it defines a solveRiddle function that determines the answer based on the question type ("what comes first in the alphabet" or "what rhymes with"). Finally, it solves the provided riddle example and prints the answer.
+
+You can modify the question and options variables with different riddles to solve other similar problems.
