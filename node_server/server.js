@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { authenticateLogin } from "./account_manager.js";
+import { loadBlog } from "./blog_manager.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +26,15 @@ server.use(express.static(path.join(__dirname, 'public')));
 
 server.post("/login", (req, res) => {
   res.json(authenticateLogin(req.body));
+});
+
+server.post("/store_blog_post", (req, res) => {
+  console.log(req.body);
+  //res.json(req.body);
+});
+
+server.get("/blog", (req, res) => {
+  res.json(loadBlog());
 });
 
 server.listen(port, (req, res) => {});
