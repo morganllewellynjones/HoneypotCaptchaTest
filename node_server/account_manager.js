@@ -33,16 +33,17 @@ export async function requestListener() {
       });
 }
 
-async function checkHoneypotFields(data) {
+async function containsHoneypotFields(data) {
   console.log(`Login attempted with data: ${JSON.stringify(data)}`);
   let source = await requestListener();
   // Screen bots
-  if (data.question !== "C" && data.question !== 'c') {
+  if (data.question.toLowerCase() !== "c") {
     // Blacklist stuff here
     logSpamIP(source);
     console.log("Denied Connection : " + source);
     return true;
   }
+  return false;
 }
 
 
@@ -51,8 +52,8 @@ async function checkHoneypotFields(data) {
 export async function authenticateLogin(data) {
 
   // Check honeypot fields
-  if (await checkHoneypotFields(data)) {
-    return true;
+  if (await containsHoneypotFields(data)) {
+    return false;
   }
 
   const accounts = JSON.parse(readFileSync("./data/account_data.json"));
@@ -61,12 +62,12 @@ export async function authenticateLogin(data) {
   if (password === data.password) {
     // Log if login attempt was fully successful
     console.log("Login Successful : " + data.username);
-    logSuccessfulAttempt(data)
+    logSuccessfulAttempt(data);
     return true;
   } else {
     // Log if attempt made it past the spam protection, but failed credential check
     logDeniedCredentials(data);
-    console.log("User is human : " + data.username);
+    console.log("Denied request to human user : " + data.username);
     return false;
   }
 }

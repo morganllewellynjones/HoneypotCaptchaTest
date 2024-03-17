@@ -42,15 +42,19 @@ server.post("/login", (req, res) => {
       next(err);
       return;
     }
-  console.log({fields, files});
-  const authenticated = authenticateLogin({fields});
-  if (authenticated) {
-    res.sendFile(path.join(__dirname, "/home.html"));
+  const data = {fields}.fields;
+  for (const key of Object.keys(data)) {
+    data[key] = data[key][0];
   }
-  else {
-    res.sendFile(path.join(__dirname, "/index.html"));
-  }
-  });
+  authenticateLogin(data).then(authenticated => {
+    console.log(authenticated);
+    if (authenticated) {
+      res.redirect("/home");
+    }
+    else {
+      res.redirect("/");
+    }
+  })});
 });
 
 // Routing to allow bot to post to blog
