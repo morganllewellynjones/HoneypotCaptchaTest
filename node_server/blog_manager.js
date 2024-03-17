@@ -7,3 +7,9 @@ export function loadBlog() {
   console.log(blog_posts);
   return blog_posts;
 }
+
+export function storeBlogPost(data) {
+  //const blog_posts = JSON.parse(readFileSync("./data/blog_posts.json");
+  //const updated = [...blog_posts, {""}];
+  //console.log(updated);
+}

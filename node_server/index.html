@@ -32,7 +32,7 @@
   </nav>
   <div class="container-fluid d-flex align-content-center justify-content-center">
     <div class="justify-content-center">
-          <form class="col-lg-9 pt-5 pb-5" id="login_form">
+          <form class="col-lg-9 pt-5 pb-5" id="login_form" method="post" action="/login">
             <p> All fields required. </p>
             <div class="mb-3">
               <label class="form-label" for="name">Username:</label>
@@ -43,7 +43,7 @@
               <input class="form-control-sm mb-3" type="password" name="password" id="password" required />
             </div>
             <div class="mb-3">
-              <label class="form-label" for="question">Question: What comes first alphabetically C or S?</label>
+              <label class="form-label" for="question">Question: What comes first alphabetically C or S (answer in one letter)?</label>
               <input class="form-control-sm mb-3" type="text" name="question" id="question" required />
             </div>
             <div class="mb-3">
@@ -54,6 +54,6 @@
   </div>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="js/index.js"> </script>
+    <script src="js/index.js"></script>
   </body>
 </html>

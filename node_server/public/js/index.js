@@ -18,17 +18,19 @@
                     "Content-Type": "application/json",
                 },
             });
-            console.log(await response.json());
+	    const text = await response.text();
+	    const html = await text.html();
+	    sessionStorage.setItem("username", JSON.parse(jsonData).username);
         } catch (e) {
             console.error(e);
         }
     }
 
     // Add an event listener
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        submitData().then((r) => {
-            console.log("Form Submitted");
-        });
-    });
+    //form.addEventListener("submit", (event) => {
+	//event.preventDefault();
+        //submitData().then((r) => {
+            //console.log("Form Submitted");
+        //});
+    //});
 })(window);

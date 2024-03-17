@@ -3,7 +3,7 @@ import {readFileSync, writeFileSync} from "fs";
 // Creates a new account entry in the account_data.json file.
 export function createAccount(username, password) {
   const data = JSON.parse(readFileSync("./data/account_data.json"));
-  const updated = data[username] ? data : { ...data, [username]: password };
+  const updated = { ...data, username: password };
   writeFileSync("./data/account_data.json", JSON.stringify(updated));
   return updated;
 }
