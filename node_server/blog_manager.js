@@ -28,6 +28,12 @@ async function containsHoneyPotFields(data) {
 // Submits the data to the blog.
 export async function submitBlogPost(data) {
 
+  //No session information, they didn't actually log in
+  if (!data.username) {
+    return false;
+  }
+
+  //If they filled out a honeypot field they are a bot, abort
   if (await containsHoneyPotFields(data)) {
     return false;
   }
@@ -40,9 +46,4 @@ export async function submitBlogPost(data) {
 
   console.log("Blog message submitted successfully.");
   return JSON.stringify(newBlog);
-
-  // TODO If we have time, complete this function to properly send the blog message to the blog
-    // const blog_posts = JSON.parse(readFileSync("./data/blog_posts.json");
-    //const updated = [...blog_posts, {""}];
-    //console.log(updated);
 }
