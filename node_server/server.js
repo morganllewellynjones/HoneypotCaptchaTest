@@ -36,6 +36,7 @@ server.get("/blog", (req, res) => {
 // Routing to allow login
 server.post("/login", (req, res) => {
 
+  //Parse multipart encoded form
   const form = formidable({});
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -52,7 +53,9 @@ server.post("/login", (req, res) => {
       res.redirect("/home");
     }
     else {
-      res.redirect("/");
+      //A more robust solution should notify the user if they are attempting to login with invalid credentials.
+      //For now we are assuming that an invalid credential set is probably a bot and sending 200 status so as not to arouse suspicion.
+      res.status(200);
     }
   })});
 });
