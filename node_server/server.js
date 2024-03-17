@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { authenticateLogin } from "./account_manager.js";
+import formidable from "formidable";
 import {loadBlog, submitBlogPost} from "./blog_manager.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,9 +35,23 @@ server.get("/blog", (req, res) => {
 
 // Routing to allow login
 server.post("/login", (req, res) => {
-  res.json(authenticateLogin(req.body));
-});
 
+  const form = formidable({});
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      next(err);
+      return;
+    }
+  console.log({fields, files});
+  const authenticated = authenticateLogin({fields});
+  if (authenticated) {
+    res.sendFile(path.join(__dirname, "/home.html"));
+  }
+  else {
+    res.sendFile(path.join(__dirname, "/index.html"));
+  }
+  });
+});
 
 // Routing to allow bot to post to blog
 server.post("/store_blog_post", (req, res) => {

@@ -37,4 +37,7 @@ export async function submitBlogPost(data) {
   return true;
 
   // TODO If we have time, complete this function to properly send the blog message to the blog
+    // const blog_posts = JSON.parse(readFileSync("./data/blog_posts.json");
+    //const updated = [...blog_posts, {""}];
+    //console.log(updated);
 }
