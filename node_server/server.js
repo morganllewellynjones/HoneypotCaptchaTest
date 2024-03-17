@@ -59,7 +59,15 @@ server.post("/login", (req, res) => {
 
 // Routing to allow bot to post to blog
 server.post("/store_blog_post", (req, res) => {
-  res.json(submitBlogPost(req.body));
+  submitBlogPost(req.body).then(response => {
+    if (response === false) {
+      //Allow the bot to think that it has succeeded, but take no action
+      res.status(200);
+    }
+    else {
+      res.send(response);
+    }
+  });
 });
 
 // Host on target port.

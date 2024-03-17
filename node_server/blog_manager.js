@@ -11,7 +11,7 @@ export function loadBlog() {
 
 // Does the same as the honeypot check for the main login page,
 // but instead checks to see if the right option is selected.
-async function checkHoneypotFields(data) {
+async function containsHoneyPotFields(data) {
   console.log(`Blog submission attempted with data: ${JSON.stringify(data)}`);
 
   // Fetch sender IP
@@ -28,13 +28,18 @@ async function checkHoneypotFields(data) {
 // Submits the data to the blog.
 export async function submitBlogPost(data) {
 
-  if (await checkHoneypotFields(data)) {
-    return true;
+  if (await containsHoneyPotFields(data)) {
+    return false;
   }
 
-  console.log("Blog message submitted successfully.");
+  const currentBlogs = JSON.parse(readFileSync("./data/blog_posts.json"));
+  const newBlog = {"date": Date.now(), "username": data.username, "message": data.blog_text};
+  const updatedBlogs = [...currentBlogs, newBlog];
+  
+  writeFileSync('./data/blog_posts.json', JSON.stringify(updatedBlogs), {encoding: "utf-8"});
 
-  return true;
+  console.log("Blog message submitted successfully.");
+  return JSON.stringify(newBlog);
 
   // TODO If we have time, complete this function to properly send the blog message to the blog
     // const blog_posts = JSON.parse(readFileSync("./data/blog_posts.json");

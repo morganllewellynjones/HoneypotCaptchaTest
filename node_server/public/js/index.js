@@ -25,12 +25,4 @@
             console.error(e);
         }
     }
-
-    // Add an event listener
-    //form.addEventListener("submit", (event) => {
-	//event.preventDefault();
-        //submitData().then((r) => {
-            //console.log("Form Submitted");
-        //});
-    //});
 })(window);

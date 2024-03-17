@@ -7,7 +7,7 @@
         const blogPost = new DocumentFragment();
 
         const postDiv = await document.createElement("div");
-        const postId = await document.createElement("h4")
+        const postId = await document.createElement("h4");
         const postContentBox = await document.createElement("div");
         const postContent = await document.createElement("p");
 
@@ -38,8 +38,10 @@
 
     async function submitData() {
         const formData = new FormData(form);
-        const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
-
+	let formObject = Object.fromEntries(formData.entries());
+	formObject.username = sessionStorage.getItem("username");
+	const jsonData = JSON.stringify(formObject);
+      
         try {
             const response = await fetch("http://localhost:8080/store_blog_post", {
                 method: "POST",
@@ -51,7 +53,7 @@
                     "Content-Type": "application/json",
                 },
             });
-            console.log(await response.json());
+            constructBlogPost(await response.json());
         } catch (e) {
             console.error(e);
         }
