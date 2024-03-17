@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { authenticateLogin } from "./account_manager.js";
-import { loadBlog } from "./blog_manager.js";
+import {loadBlog, submitBlogPost} from "./blog_manager.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +26,12 @@ server.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "/home.html"));
 });
 
+// Routing to allow access to json object of blog entries
+server.get("/blog", (req, res) => {
+  res.json(loadBlog());
+});
+
+
 // Routing to allow login
 server.post("/login", (req, res) => {
   res.json(authenticateLogin(req.body));
@@ -34,16 +40,10 @@ server.post("/login", (req, res) => {
 
 // Routing to allow bot to post to blog
 server.post("/store_blog_post", (req, res) => {
-  console.log(req.body);
-  //res.json(req.body);
+  res.json(submitBlogPost(req.body));
 });
-
-
-// Routing to allow access to json object of blog entries
-server.get("/blog", (req, res) => {
-  res.json(loadBlog());
-});
-
 
 // Host on target port.
-server.listen(port, (req, res) => {});
+server.listen(port, (req, res) => {
+  console.log("Server listening on PORT", port);
+});

@@ -33,15 +33,25 @@
   <div class="container-fluid d-flex align-content-center justify-content-center">
     <div class="justify-content-center">
       <div>
-        <h2 class="home_title">You are home!</h2>
+        <h2 class="mt-3 home_title">You are home!</h2>
       </div>
-      <div class="blog">
-        <h2>Blog</h2>
-        <div class="create_blog_post">
-          <textarea></textarea>
-          <input type="submit" value="Submit"/>
+      <h2>Blog</h2>
+      <form class="col-auto pb-5 blog" id="blog_form">
+        <label for="blog_text"></label>
+        <textarea name="blog_text" id="blog_text" class="mb-3"></textarea>
+
+        <label for="blog_select">Pick the word that rhymes with dragon.</label>
+        <select class="form-select form-select-sm mb-3" name="blog_select" id="blog_select">
+          <option selected>Select from this Dropdown</option>
+          <option value="1">Boat</option>
+          <option value="2">Cow</option>
+          <option value="3">Wagon</option>
+          <option value="4">Serpent</option>
+        </select>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 

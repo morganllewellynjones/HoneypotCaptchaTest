@@ -1,4 +1,8 @@
 (function(window) {
+    // Get blog post form
+    const form = document.querySelector("#blog_form");
+
+    // Construct blog post from file to display onto page
     async function constructBlogPost(post) {
         const blogPost = new DocumentFragment();
 
@@ -28,9 +32,37 @@
         const response = await fetch("http://localhost:8080/blog");
         const blog_posts = await response.json();
         for (const post of blog_posts) {
-            constructBlogPost(post);
+            await constructBlogPost(post);
         }
-    };
+    }
+
+    async function submitData() {
+        const formData = new FormData(form);
+        const jsonData = JSON.stringify(Object.fromEntries(formData.entries()));
+
+        try {
+            const response = await fetch("http://localhost:8080/store_blog_post", {
+                method: "POST",
+                mode: "same-origin",
+                credentials: "same-origin",
+                cache: "no-cache",
+                body: jsonData,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            console.log(await response.json());
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        submitData().then((r) => {
+            console.log("Attempted to submit blog.");
+        });
+    });
 
     addEventListener("DOMContentLoaded", (e) => loadBlog());
 })(window)

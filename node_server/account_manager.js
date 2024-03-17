@@ -24,7 +24,7 @@ export function resetAccountData() {
 }
 
 // Log ip of user to refuse future connections.
-async function requestListener() {
+export async function requestListener() {
   return fetch('https://api.ipify.org?format=json')
       .then(response => response.json())
       .then(data => {
@@ -39,7 +39,7 @@ async function checkHoneypotFields(data) {
   // Screen bots
   if (data.question !== "C" && data.question !== 'c') {
     // Blacklist stuff here
-    logSpamIP(source + "\n");
+    logSpamIP(source);
     console.log("Denied Connection : " + source);
     return true;
   }
@@ -74,7 +74,7 @@ export async function authenticateLogin(data) {
 // Logs any denied logins to log for measurement
 export function logSpamIP(target) {
   // Open file for appending if it exists, if not, create it and append.
-  writeFileSync('./data/spam_log.csv', `${target}\n`, {encoding: "utf-8", flag: 'a'});
+  writeFileSync('./data/spam_log.csv', `${target}, ${Date.now()}\n`, {encoding: "utf-8", flag: 'a'});
 }
 
 // Logs an attempt that made it through the spam filter, but failed due to bad credentials
