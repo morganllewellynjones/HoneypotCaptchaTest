@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.home_title {
+    padding-bottom: 5rem;
+}
+
+.blog {
+    display: grid;
+    max-width: 360px;
+    gap: 0.5rem;
+}
+.blog_post {
+    display: grid;
+    border: 1px solid black;
+}
+.blog_post_id {
+    border: 1px solid black;
+    padding: 0.5rem;
+}
+.blog_post_content_box {
+    border: 1px solid black;
+    padding: 0.5rem;
+    max-width: 360px;
+    min-height: 120px;
+}
+.create_blog_post {
+    display: grid;
+}
+
+.create_blog_post textarea {
+    min-height: 120px;
+}
