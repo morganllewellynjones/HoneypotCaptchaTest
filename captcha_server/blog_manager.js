@@ -11,7 +11,7 @@ export function loadBlog() {
 
 // Does the same as the honeypot check for the main login page,
 // but instead checks to see if the right option is selected.
-async function containsHoneyPotFields(data) {
+async function passedChallengeRiddle(data) {
   console.log(`Blog submission attempted with data: ${JSON.stringify(data)}`);
 
   // Fetch sender IP
@@ -29,12 +29,14 @@ async function containsHoneyPotFields(data) {
 export async function submitBlogPost(data) {
 
   //No session information, they didn't actually log in
+  //Giving them an anonymous name is probably overly generous to our spam bots, but we're generous people
+  //It is our CAPTCHAs that should reject them anyway
   if (!data.username) {
-    return false;
+    data.username = "anonymous";
   }
 
   //If they filled out a honeypot field they are a bot, abort
-  if (await containsHoneyPotFields(data)) {
+  if (await passedChallengeRiddle(data)) {
     return false;
   }
 

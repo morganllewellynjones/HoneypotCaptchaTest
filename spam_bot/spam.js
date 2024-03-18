@@ -8,7 +8,9 @@ import puppeteer from "puppeteer";
  * We assume this program to be a file in a larger program, one which crawls the web looking for victim sites.
  * For obvious ethical and legal reasons we cannot test our spam bot on live sites. But hopefully you can imagine its place in a larger program.
  *
- * This spambot is naive because it doesn't check for honeypot CAPTCHA fields, and has limited ability to troubleshoot site navigation issues. It makes simple assumptions about how a login page is formatted, for example. Currently, this bot fails to bypass our honeypot CAPTCHA protected site in about three different ways. However, before implementing honeypot CAPTCHAs and our riddle CAPTCHA, this bot succeeded.
+ * This spambot is naive because it doesn't check for honeypot CAPTCHA fields, and has limited ability to troubleshoot site navigation issues. It makes simple assumptions about how a login page is formatted, for example.
+ *
+ * Update: The spambot does not need to check for honeypot fields... because the puppeteer api already does it. When puppeteer "clicks" or "types" it actually performs many browser actions under the hood. These include locating the element on the page, scrolling it into view, focusing the element and then clicking on it, finally it performs the actual key movements to type. If you attempt to "type" into a honeypot field using Puppeteer it will silently fail because it can't locate the element on the page.
  */
 
 async function getLogin(page) {
@@ -77,12 +79,6 @@ async function stuffCredentials(page, usernameQuery, passwordQuery) {
   } catch {
     console.log("Unable to log in...");
   };
-}
-
-async function isVisible(element) {
-  //Not implemented in this version.
-  //This naive spambot is not actually checking to make sure that the page elements are honeypot fields.
-  return false;
 }
 
 async function Login(page) {
