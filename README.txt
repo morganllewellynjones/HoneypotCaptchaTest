@@ -7,13 +7,25 @@ We have included only one spambot. We were going to have two: one that is naive 
 
 We recommend running these two processes (server and spam) in two separate terminal tabs. You must start a server befor running a spam bot, or the spam bot will have nothing to attack. Here are the commands to run each program:
 
-To run an instance of a Victim Server
+To run this project one will need to have Node.js installed, which by default should install NPM, the main package manager for nodejs as well.
+
+To run an instance of a Victim Server, Open up one of the server folders in terminal, and run the following commands.
+
+npm install
+npm run server
+
+In some instances, the following commands may work as well.
+
 node normal_server/server.js
 node honeypot_server/server.js
 node captcha_server/server.js
 
-Log files are writen to the operating servers data folder, i.e. normal_server/data/...
+Log files are written to the operating servers data folder, i.e. normal_server/data/...
 All logs are dated with an epoch timestamp.
 
 To run an instance of a Spam Bot
+
+In the same way as the servers, navigate to spam_bot folder in terminal and run the following commands
+
+npm install
 node spam_bot/spam.js
