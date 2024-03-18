@@ -33,3 +33,9 @@
 .create_blog_post textarea {
     min-height: 120px;
 }
+
+.important {
+    display: none;
+    border: 2px solid red;
+    padding: 20px;
+}

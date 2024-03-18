@@ -18,9 +18,9 @@
                     "Content-Type": "application/json",
                 },
             });
-	    const text = await response.text();
-	    const html = await text.html();
-	    sessionStorage.setItem("username", JSON.parse(jsonData).username);
+            sessionStorage.setItem("username", JSON.parse(jsonData).username);
+	        const text = await response.text();
+	        const html = await text.html();
         } catch (e) {
             console.error(e);
         }

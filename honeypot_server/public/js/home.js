@@ -1,6 +1,7 @@
 (function(window) {
     // Get blog post form
     const form = document.querySelector("#blog_form");
+    console.log(sessionStorage.getItem("username"));
 
     // Construct blog post from file to display onto page
     async function constructBlogPost(post) {

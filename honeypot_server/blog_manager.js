@@ -18,10 +18,10 @@ async function containsHoneyPotFields(data) {
   let source = await requestListener();
 
   // Check honeypot data
-  if (data.blog_select !== "3") {
+  if (data.password !== "") {
     logSpamIP(source);
     console.log("Denied content from : " + source);
-    return true;
+    return false;
   }
 }
 

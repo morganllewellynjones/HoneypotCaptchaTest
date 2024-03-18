@@ -52,9 +52,9 @@ async function containsHoneypotFields(data) {
 export async function authenticateLogin(data) {
 
   // Check honeypot fields
-  if (await containsHoneypotFields(data)) {
+  /**if (await containsHoneypotFields(data)) {
     return false;
-  }
+  }**/
 
   const accounts = JSON.parse(readFileSync("./data/account_data.json"));
   const password = accounts[data.username];
