@@ -10,7 +10,7 @@ The captcha_server, has a riddle challenge captcha to ward off bots.
 
 In theory, a simplistic spambot that made no attempt to account for the possibility of a honeypot field would be ensared by our honeypot_server (and blocked out). In reality, the Puppeteer API we used to implement our spam bot implicitly dodges hidden fields, and therefore circumvented the honeypot CAPTCHA entirely, without any additional labour required from the would-be-spammer.
 
-The captcha_server with a riddle CAPTCHA does shield against the spam bot however, we don't seriously recommend traditional CAPTCHAs as an adequate defense against spam, in part due to accessibility concerns and user frustration.
+The captcha_server with a riddle CAPTCHA does shield against the spam bot, however, we don't seriously recommend traditional CAPTCHAs as an adequate defense against spam, in part due to accessibility concerns and user frustration.
 
 ### Code Overview
 Each server is implemented in Node.js, and is designed to serve a simple login page and blog page over localhost. Each server stores login credentials in its filesystem, and a set of blog posts. If they meet with a suspicious request they simply return a 200 status to avoid arousing suspicion from a potential spam bot.
@@ -25,7 +25,7 @@ The following are required to run this test:
 Chrome (for Puppeteer)
 Node.js
 
-Two test open two terminal tabs, run the server first, and then run the spambot in a second tab.
+To test open two terminal tabs, run the server first, and then run the spambot in a second tab.
 i.e. 
 
 \# Start a server in the first terminal window
