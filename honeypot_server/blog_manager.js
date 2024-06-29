@@ -28,9 +28,11 @@ async function containsHoneyPotFields(data) {
 // Submits the data to the blog.
 export async function submitBlogPost(data) {
 
-  //No session information, they didn't actually log in
-  if (!data.username) {
-    return false;
+  // No session information, they didn't actually log in
+	// They are likely spam, but for ease of use we will allow them for now as anonymous
+	if (!data.username) {
+    data.username = "anonymous";
+		// return false;
   }
 
   //If they filled out a honeypot field they are a bot, abort

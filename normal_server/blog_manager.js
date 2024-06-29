@@ -12,6 +12,8 @@ export function loadBlog() {
 // Submits the data to the blog.
 export async function submitBlogPost(data) {
 
+	console.log("Attempting to submit blog post.");
+
   //Allow anonymous post
   if (!data.username) {
     data.username = "anonymous";
