@@ -28,10 +28,10 @@ Node.js
 Two test open two terminal tabs, run the server first, and then run the spambot in a second tab.
 i.e. 
 
-[//]: # Start a server in the first terminal window
+\# Start a server in the first terminal window
 1> `(cd normal_server && npm install && node server.js)`
 
-[//]]: # Start the spambot in a second terminal window
+\# Start the spambot in a second terminal window
 2> `(cd spam_bot && npm install && node spam.js)`
 
 ...and watch the output in your terminal.
