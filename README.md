@@ -1,7 +1,7 @@
 ## Honeypot Captcha Test
 
 ### About the Study
-This test was created in the last week of Computer and Network Security I, as a project to determine if Honeypot Captcha's could be considered a reasonable defense against spambots in todays Internet. 
+This test was created as a self-guided project in part of a Cybersecurity course to determine if Honeypot Captcha's could be considered a reasonable defense against spambots in todays Internet. 
 
 To test our theory, we elected to create three similar but slightly different Node.js servers, each serving a simplistic blog.
 The normal_server, has no defenses of any kind.
